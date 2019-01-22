@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die; // If this file is called directly, abort.
+}
+
 if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 
 	class Upcoming_Events_Lists_Admin {
@@ -75,7 +79,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 			$labels = array(
 				'name'               => _x( 'Events', 'Post Type General Name', 'upcoming-events' ),
 				'singular_name'      => _x( 'Event', 'Post Type Singular Name', 'upcoming-events' ),
-				'menu_name'          => __( 'Event', 'upcoming-events' ),
+				'menu_name'          => __( 'Events', 'upcoming-events' ),
 				'parent_item_colon'  => __( 'Parent Event:', 'upcoming-events' ),
 				'all_items'          => __( 'All Events', 'upcoming-events' ),
 				'view_item'          => __( 'View Event', 'upcoming-events' ),
@@ -163,7 +167,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 		 */
 		public function add_meta_boxes() {
 			add_meta_box( 'sis-event-info-metabox', __( 'Event Info', 'upcoming-events' ),
-				array( $this, 'render_event_info_metabox' ), 'event', 'side', 'core' );
+				array( $this, 'render_event_info_metabox' ), self::POST_TYPE, 'side', 'core' );
 		}
 
 		/**

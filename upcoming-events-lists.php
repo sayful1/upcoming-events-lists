@@ -11,6 +11,10 @@
  * License: GPL2
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die; // If this file is called directly, abort.
+}
+
 if ( ! class_exists( 'Upcoming_Events_Lists' ) ) {
 
 	class Upcoming_Events_Lists {

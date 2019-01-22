@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die; // If this file is called directly, abort.
+}
+
 /**
  * Class Upcoming_Events
  */
@@ -113,9 +117,10 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 		$upcoming_events = new WP_Query( $query_args );
 
 		//Preparing to show the events
-		echo $before_widget;
-		if ( isset( $title ) && $title ) {
-			echo $before_title . $title . $after_title;
+		echo $args['before_widget'];
+
+		if ( ! empty( $title ) ) {
+			echo $args['before_title'] . $title . $args['after_title'];
 		}
 		?>
 
@@ -148,8 +153,7 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 		<?php
 		wp_reset_query();
 
-		echo $after_widget;
-
+		echo $args['after_widget'];
 	}
 
 	/**
