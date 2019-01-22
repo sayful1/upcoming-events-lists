@@ -1,9 +1,9 @@
 === Upcoming Events Lists ===
 Contributors: sayful
 Tags: calendar, events, feed, upcoming events, calendear widget
-Requires at least: 3.0
-Tested up to: 4.8
-Stable tag: 1.3.2
+Requires at least: 4.7
+Tested up to: 5.0
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
