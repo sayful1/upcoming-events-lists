@@ -1,0 +1,7 @@
+.events-list-item { margin-bottom: 21px; }
+.events-list-item .event-venue { font-size: 0.9em; font-weight: 100; font-style: italic; }
+.events-list-item p { margin-bottom: 3px; }
+.events-list-image img { border: 0 none; height: auto; max-width: 100%; vertical-align: middle; }
+.events-list-title { margin-bottom: 3px; }
+.events-list-title a { text-decoration: none; padding: 0; }
+.events-list-date { font-size: 10px; font-weight: 300; }
