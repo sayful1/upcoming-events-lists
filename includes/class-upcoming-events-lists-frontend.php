@@ -36,6 +36,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Frontend' ) ) {
 		public function initialize_hooks() {
 			add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 			add_filter( 'the_content', array( $this, 'single_event_content' ) );
+			add_filter( 'the_content', array( $this, 'archive_event_content' ) );
 		}
 
 		/**
@@ -60,6 +61,42 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Frontend' ) ) {
 			}
 
 			return false;
+		}
+
+		/**
+		 * Check if archive-event.php file loaded in theme directory
+		 *
+		 * @return bool
+		 */
+		private function has_event_archive_template() {
+			if ( locate_template( "archive-event.php" ) != '' ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check if single-event.php file loaded in theme directory
+		 *
+		 * @return bool
+		 */
+		private function has_event_single_template() {
+			if ( locate_template( "single-event.php" ) != '' ) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public function archive_event_content( $content ) {
+			if ( is_post_type_archive( 'event' ) ) {
+				if ( $this->has_event_archive_template() ) {
+					return $content;
+				}
+			}
+
+			return $content;
 		}
 
 		/**
