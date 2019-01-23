@@ -1,6 +1,6 @@
 === Upcoming Events Lists ===
 Contributors: sayful
-Tags: calendar, events, feed, upcoming events, calendear widget
+Tags: calendar, events, feed, upcoming-events, widget
 Requires at least: 4.7
 Tested up to: 5.0
 Stable tag: 1.3.3
@@ -49,15 +49,20 @@ Install by FTP
 
 
 == Frequently Asked Questions ==
-Do you have questions or issues with SIS Upcoming Events? [Ask for support](http://wordpress.org/support/plugin/upcoming-events-lists)
+Do you have questions or issues with Upcoming Events Lists? [Ask for support](http://wordpress.org/support/plugin/upcoming-events-lists)
 
 == Screenshots ==
 1. Screenshot of event widget selection
 2. Screenshot of event description include by custom post
 3. Screenshot of all event list
-4. Screenshot of display of event at front-end
+4. Screenshot of display of event at frontend
 
 == Changelog ==
+
+= version 1.3.3 - 2019-01-23 =
+* Tweak - Checked version compatibility upto WordPress 5.0
+* Dev - Add `Upcoming_Events_Lists_Event` class for event post type.
+* Dev - Update core code.
 
 = version 1.3.2 - 2017-01-15 =
 * Updated - Updated jQuery UI Datepicker style for Admin.

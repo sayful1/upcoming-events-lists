@@ -64,9 +64,9 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 			global $post;
 
 			if ( ( 'post.php' == $hook || 'post-new.php' == $hook ) && ( self::POST_TYPE == $post->post_type ) ) {
-				wp_enqueue_script( 'upcoming-events-lists-admin', UPCOMING_EVENTS_LISTS_ASSETS . '/js/script.js',
+				wp_enqueue_script( 'upcoming-events-lists-admin', UPCOMING_EVENTS_LISTS_ASSETS . '/js/admin.js',
 					array( 'jquery', 'jquery-ui-datepicker' ), UPCOMING_EVENTS_LISTS_VERSION, true );
-				wp_enqueue_style( 'upcoming-events-lists-admin', UPCOMING_EVENTS_LISTS_ASSETS . '/css/admin.css',
+				wp_enqueue_style( 'upcoming-events-lists-admin', UPCOMING_EVENTS_LISTS_ASSETS . '/css/admin-style.css',
 					array(), UPCOMING_EVENTS_LISTS_VERSION, 'all' );
 			}
 		}
@@ -132,9 +132,9 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 		function custom_columns_head( $defaults ) {
 			unset( $defaults['date'] );
 
+			$defaults['event_venue']      = __( 'Venue', 'upcoming-events' );
 			$defaults['event_start_date'] = __( 'Start Date', 'upcoming-events' );
 			$defaults['event_end_date']   = __( 'End Date', 'upcoming-events' );
-			$defaults['event_venue']      = __( 'Venue', 'upcoming-events' );
 
 			return $defaults;
 		}
@@ -158,7 +158,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 
 			if ( 'event_venue' == $column_name ) {
 				$venue = get_post_meta( $post_id, 'event-venue', true );
-				echo $venue;
+				echo esc_html( $venue );
 			}
 		}
 
@@ -177,7 +177,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 		 */
 		public function render_event_info_metabox( $post ) {
 			//generate a nonce field
-			wp_nonce_field( basename( __FILE__ ), 'sis-event-info-nonce' );
+			wp_nonce_field( 'upcoming-events-list', '_event_nonce' );
 
 			//get previously saved meta values (if any)
 			$event_start_date = get_post_meta( $post->ID, 'event-start-date', true );
@@ -217,16 +217,10 @@ if ( ! class_exists( 'Upcoming_Events_Lists_Admin' ) ) {
 		 * @param  int $post_id The id of the current post
 		 */
 		function save_meta_boxes( $post_id ) {
-			//checking if the post being saved is an 'event',
-			//if not, then return
-			if ( isset( $_POST['post_type'] ) && 'event' != $_POST['post_type'] ) {
-				return;
-			}
-
 			//checking for the 'save' status
 			$is_autosave    = wp_is_post_autosave( $post_id );
 			$is_revision    = wp_is_post_revision( $post_id );
-			$is_valid_nonce = ( isset( $_POST['sis-event-info-nonce'] ) && ( wp_verify_nonce( $_POST['sis-event-info-nonce'], basename( __FILE__ ) ) ) ) ? true : false;
+			$is_valid_nonce = isset( $_POST['_event_nonce'] ) && wp_verify_nonce( $_POST['_event_nonce'], 'upcoming-events-list' );
 
 			//exit depending on the save status or if the nonce is not valid
 			if ( $is_autosave || $is_revision || ! $is_valid_nonce ) {

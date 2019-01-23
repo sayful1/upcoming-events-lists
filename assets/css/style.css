@@ -1,7 +1,1 @@
-.events-list-item { margin-bottom: 21px; }
-.events-list-item .event-venue { font-size: 0.9em; font-weight: 100; font-style: italic; }
-.events-list-item p { margin-bottom: 3px; }
-.events-list-image img { border: 0 none; height: auto; max-width: 100%; vertical-align: middle; }
-.events-list-title { margin-bottom: 3px; }
-.events-list-title a { text-decoration: none; padding: 0; }
-.events-list-date { font-size: 10px; font-weight: 300; }
+.upcoming-events-list-item{display:block;margin:0 0 1rem;padding:0}.upcoming-events-list-item__title-text{font-size:1.125rem}.upcoming-events-list-button{display:block;width:100%;border:1px solid;padding:1rem;text-align:center;text-decoration:none;line-height:1}

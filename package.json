@@ -1,0 +1,50 @@
+{
+	"name": "upcoming-events-lists",
+	"version": "1.0.0",
+	"description": "A foundation for WordPress Plugin Development that aims to provide a clear and consistent guide for building your plugins.",
+	"keywords": [
+		"wordpress",
+		"wordpress-plugin",
+		"events",
+		"events-list",
+		"upcoming-events",
+		"upcoming-events-list"
+	],
+	"author": {
+		"name": "Sayful Islam",
+		"email": "sayful.islam001@gmail.com",
+		"url": "https://sayfulislam.com"
+	},
+	"license": "GPL-3.0-only",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sayful1/upcoming-events-lists.git"
+	},
+	"bugs": {
+		"url": "https://github.com/sayful1/upcoming-events-lists/issues"
+	},
+	"homepage": "https://github.com/sayful1/upcoming-events-lists#readme",
+	"scripts": {
+		"dev": "webpack --mode=development --progress --colors --watch --hide-modules",
+		"dev-build": "webpack --mode=development",
+		"build": "webpack --mode=production"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.2.2",
+		"@babel/preset-env": "^7.2.3",
+		"autoprefixer": "^9.4.5",
+		"babel-loader": "^8.0.5",
+		"browser-sync": "^2.26.3",
+		"browser-sync-webpack-plugin": "^2.2.2",
+		"css-loader": "^2.1.0",
+		"mini-css-extract-plugin": "^0.5.0",
+		"node-sass": "^4.11.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"postcss-loader": "^3.0.0",
+		"sass-loader": "^7.1.0",
+		"style-loader": "^0.23.1",
+		"uglifyjs-webpack-plugin": "^2.1.1",
+		"webpack": "^4.28.4",
+		"webpack-cli": "^3.2.1"
+	}
+}

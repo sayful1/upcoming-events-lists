@@ -102,6 +102,7 @@ if ( ! class_exists( 'Upcoming_Events_Lists' ) ) {
 		 * Including the widget
 		 */
 		public function includes() {
+			include_once dirname( __FILE__ ) . '/includes/class-upcoming-events-lists-event.php';
 			include_once dirname( __FILE__ ) . '/includes/class-upcoming-events-lists-admin.php';
 			include_once dirname( __FILE__ ) . '/includes/class-upcoming-events-lists-frontend.php';
 			include_once dirname( __FILE__ ) . '/includes/class-widget-upcoming-events-lists.php';

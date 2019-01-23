@@ -1,5 +1,9 @@
 # Folders
 .idea
+node_modules
 
 # Files
 **.map
+*style.js
+*style.min.js
+package-lock.json

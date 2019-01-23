@@ -93,28 +93,8 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 		}
 
-		//Preparing the query for events
-		$meta_quer_args = array(
-			'relation' => 'AND',
-			array(
-				'key'     => 'event-end-date',
-				'value'   => time(),
-				'compare' => '>='
-			)
-		);
-
-		$query_args = array(
-			'post_type'           => 'event',
-			'posts_per_page'      => isset( $instance['number_events'] ) ? $instance['number_events'] : 5,
-			'post_status'         => 'publish',
-			'ignore_sticky_posts' => true,
-			'meta_key'            => 'event-start-date',
-			'orderby'             => 'meta_value_num',
-			'order'               => 'ASC',
-			'meta_query'          => $meta_quer_args
-		);
-
-		$upcoming_events = new WP_Query( $query_args );
+		/** @var Upcoming_Events_Lists_Event[] $events */
+		$events = Upcoming_Events_Lists_Event::get_events();
 
 		//Preparing to show the events
 		echo $args['before_widget'];
@@ -124,35 +104,18 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 		}
 		?>
 
-        <ul class="events-list">
-			<?php while ( $upcoming_events->have_posts() ): $upcoming_events->the_post();
-				$event_start_date = get_post_meta( get_the_ID(), 'event-start-date', true );
-				$event_end_date   = get_post_meta( get_the_ID(), 'event-end-date', true );
-				$event_venue      = get_post_meta( get_the_ID(), 'event-venue', true );
-				$event_image      = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
-				?>
-                <li class="events-list-item">
-                    <div class="events-list-image">
-                        <a href="<?php the_permalink(); ?>">
-                            <img class="event_image" src="<?php echo $event_image[0]; ?>" alt="">
-                        </a>
-                    </div>
-                    <h4 class="events-list-title">
-                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                        <span class="event-venue">at <?php echo $event_venue; ?></span>
-                    </h4>
-					<?php the_excerpt(); ?>
-                    <time class="events-list-date"><?php echo date_i18n( get_option( 'date_format' ), $event_start_date ); ?>
-                        &ndash; <?php echo date_i18n( get_option( 'date_format' ), $event_end_date ); ?></time>
-                </li>
-			<?php endwhile; ?>
-        </ul>
-
-        <a href="<?php echo get_post_type_archive_link( 'event' ); ?>"><?php _e( 'View All Events', 'upcoming-events' ); ?></a>
+        <div class="upcoming-events-list">
+			<?php
+			foreach ( $events as $event ) {
+				$event->get_event_card();
+			}
+			?>
+        </div>
+        <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( 'event' ); ?>">
+			<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
+        </a>
 
 		<?php
-		wp_reset_query();
-
 		echo $args['after_widget'];
 	}
 
