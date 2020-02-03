@@ -11,6 +11,7 @@
  * the readme will list any important changes.
  */
 
+// If this file is called directly, abort.
 defined( 'ABSPATH' ) || exit;
 
 get_header();

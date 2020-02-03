@@ -1,50 +1,57 @@
 {
-	"name": "upcoming-events-lists",
-	"version": "1.0.0",
-	"description": "A foundation for WordPress Plugin Development that aims to provide a clear and consistent guide for building your plugins.",
-	"keywords": [
-		"wordpress",
-		"wordpress-plugin",
-		"events",
-		"events-list",
-		"upcoming-events",
-		"upcoming-events-list"
-	],
-	"author": {
-		"name": "Sayful Islam",
-		"email": "sayful.islam001@gmail.com",
-		"url": "https://sayfulislam.com"
-	},
-	"license": "GPL-3.0-only",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/sayful1/upcoming-events-lists.git"
-	},
-	"bugs": {
-		"url": "https://github.com/sayful1/upcoming-events-lists/issues"
-	},
-	"homepage": "https://github.com/sayful1/upcoming-events-lists#readme",
-	"scripts": {
-		"dev": "webpack --mode=development --progress --colors --watch --hide-modules",
-		"dev-build": "webpack --mode=development",
-		"build": "webpack --mode=production"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.2.2",
-		"@babel/preset-env": "^7.2.3",
-		"autoprefixer": "^9.4.5",
-		"babel-loader": "^8.0.5",
-		"browser-sync": "^2.26.3",
-		"browser-sync-webpack-plugin": "^2.2.2",
-		"css-loader": "^2.1.0",
-		"mini-css-extract-plugin": "^0.5.0",
-		"node-sass": "^4.11.0",
-		"optimize-css-assets-webpack-plugin": "^5.0.1",
-		"postcss-loader": "^3.0.0",
-		"sass-loader": "^7.1.0",
-		"style-loader": "^0.23.1",
-		"uglifyjs-webpack-plugin": "^2.1.1",
-		"webpack": "^4.28.4",
-		"webpack-cli": "^3.2.1"
-	}
+  "name": "upcoming-events-lists",
+  "version": "1.4.0",
+  "description": "Upcoming Events Lists let you to show a list of upcoming events on the front-end.",
+  "keywords": [
+    "wordpress",
+    "wordpress-plugin",
+    "events",
+    "events-list",
+    "upcoming-events",
+    "upcoming-events-list"
+  ],
+  "author": {
+    "name": "Sayful Islam",
+    "email": "sayful.islam001@gmail.com",
+    "url": "https://sayfulislam.com"
+  },
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sayful1/upcoming-events-lists.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sayful1/upcoming-events-lists/issues"
+  },
+  "homepage": "https://github.com/sayful1/upcoming-events-lists#readme",
+  "scripts": {
+    "dev": "webpack --mode=development --progress --colors --watch --hide-modules",
+    "dev-build": "webpack --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "autoprefixer": "^9.7.4",
+    "babel-loader": "^8.0.6",
+    "browser-sync": "^2.26.7",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "css-loader": "^3.4.2",
+    "file-loader": "^5.0.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "terser-webpack-plugin": "^2.3.2",
+    "vue-loader": "^15.8.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
 }

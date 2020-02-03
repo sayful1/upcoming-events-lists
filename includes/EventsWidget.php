@@ -1,13 +1,16 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die; // If this file is called directly, abort.
-}
+namespace UpcomingEventsLists;
+
+use WP_Widget;
+
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Upcoming_Events
  */
-class Widget_Upcoming_Events_Lists extends WP_Widget {
+class EventsWidget extends WP_Widget {
 
 	/**
 	 * Initializing the widget
@@ -29,7 +32,7 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 	/**
 	 * Displaying the widget on the back-end
 	 *
-	 * @param  array $instance An instance of the widget
+	 * @param array $instance An instance of the widget
 	 */
 	public function form( $instance ) {
 		$widget_defaults = array(
@@ -64,8 +67,8 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 	/**
 	 * Making the widget updateable
 	 *
-	 * @param  array $new_instance New instance of the widget
-	 * @param  array $old_instance Old instance of the widget
+	 * @param array $new_instance New instance of the widget
+	 * @param array $old_instance Old instance of the widget
 	 *
 	 * @return array An updated instance of the widget
 	 */
@@ -82,8 +85,8 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 	/**
 	 * Displaying the widget on the front-end
 	 *
-	 * @param  array $args Widget options
-	 * @param  array $instance An instance of the widget
+	 * @param array $args Widget options
+	 * @param array $instance An instance of the widget
 	 */
 	public function widget( $args, $instance ) {
 
@@ -93,8 +96,7 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 		}
 
-		/** @var Upcoming_Events_Lists_Event[] $events */
-		$events = Upcoming_Events_Lists_Event::get_events();
+		$events = Event::get_events();
 
 		//Preparing to show the events
 		echo $args['before_widget'];
@@ -111,7 +113,7 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 			}
 			?>
         </div>
-        <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( 'event' ); ?>">
+        <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( Event::POST_TYPE ); ?>">
 			<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
         </a>
 
@@ -126,5 +128,3 @@ class Widget_Upcoming_Events_Lists extends WP_Widget {
 		register_widget( __CLASS__ );
 	}
 }
-
-add_action( 'widgets_init', array( 'Widget_Upcoming_Events_Lists', 'register' ) );

@@ -1,6 +1,8 @@
 # Folders
 .idea
 node_modules
+assets/css
+assets/js
 
 # Files
 **.map
