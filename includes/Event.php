@@ -106,7 +106,7 @@ class Event implements \JsonSerializable {
 	 *
 	 * @return mixed|null
 	 */
-	public function get_meta_value( $key, $default = null ) {
+	public function get_meta_value( $key, $default = '' ) {
 		return isset( $this->meta_values[ $key ] ) ? $this->meta_values[ $key ] : $default;
 	}
 
