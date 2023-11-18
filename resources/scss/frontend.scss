@@ -1,24 +1,97 @@
+@use "shapla-css/src/index.scss" as shapla;
+
+@include shapla.columns;
+
 .upcoming-events-list {
-	&-item {
-		display: block;
-		margin: 0 0 1rem;
-		padding: 0;
+  --shadow: 0px 2px 8px rgba(30, 10, 60, 0.06), 0px 4px 12px rgba(30, 10, 60, 0.08);
+  --grid-gap: 1rem;
+  --border-radius: 8px;
+  --text-primary: #000000de;
+  --text-secondary: #0000008a;
+  --text-tertiary: #00000061;
+}
 
-		&__title {
+.upcoming-events-list-item {
+  display: block;
+  margin: 0 0 1rem;
+  padding: 0;
+  height: 100%;
 
-			&-text {
-				font-size: 1.125rem;
-			}
-		}
-	}
+  &__title-text {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    letter-spacing: .25px;
+    color: var(--text-primary);
+  }
 
-	&-button {
-		display: block;
-		width: 100%;
-		border: 1px solid currentColor;
-		padding: 1rem;
-		text-align: center;
-		text-decoration: none;
-		line-height: 1;
-	}
+  &__location {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    color: var(--text-tertiary);
+    margin-top: .25rem;
+  }
+
+  &__datetime {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-top: .25rem;
+  }
+}
+
+.upcoming-events-list-button {
+  display: block;
+  width: 100%;
+  border: 1px solid currentColor;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.grid-view {
+  //display: flex;
+  //flex-wrap: wrap;
+  //margin: calc(-1 * var(--grid-gap));
+  //margin-bottom: var(--grid-gap);
+
+  & > * {
+    //padding: var(--grid-gap);
+    //width: 100%;
+  }
+
+  &.items-per-row-2 > * {
+    //width: calc(100% / 2);
+  }
+
+  &.items-per-row-3 > * {
+    //width: calc(100% / 3);
+  }
+
+  &.items-per-row-4 > * {
+    //width: calc(100% / 4);
+  }
+
+  .upcoming-events-list-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: var(--border-radius);
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+  }
+
+  .upcoming-events-list-item__media,
+  .upcoming-events-list-item__media img {
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+  }
+
+  .upcoming-events-list-item__content {
+    padding: 1rem;
+  }
 }

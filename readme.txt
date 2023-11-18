@@ -1,52 +1,55 @@
 === Upcoming Events Lists ===
 Contributors: sayful
 Tags: calendar, events, feed, upcoming-events, widget
-Requires at least: 4.7
-Tested up to: 5.0
-Stable tag: 1.3.3
+Requires at least: 6.0
+Tested up to: 6.4
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin to show a list of upcoming events on the front-end as widget.
+A WordPress plugin to show a list of upcoming events on the front-end.
 
 == Description ==
 A WordPress plugin to show a list of upcoming events on the front-end as widget.
 
 = Usage =
 
-After installing and activating the plugins
+Step 1: Creating events
 
-<ul>
-	<li>Go to <strong>Admin Dashboard -> Event -> Add New</strong> and</li>
-	<li>Create your upcoming event with event title, event description, event starting date , event closing date and event venue. Then</li>
-	<li>Go to <strong>Admin Dashboard -> Appearance -> Widgets</strong> and</li>
-	<li>Find <strong>"Upcoming Events"</strong> and click on it.</li>
-	<li>Select at which widget area you want to show it. and click <strong>Add Widget</strong></li>
-	<li>Give widget title and choose the number of events you want to show and click <strong>Save</strong></li>
-</ul>
+After installing and activating the plugin, a new custom post type called "Events" will appear at your WordPress Admin area.
+Just create your events from the "Events" menu.
+
+Step 2: Using on Gutenberg Block Editor (WordPress 5.0 or later)
+
+If you are using block editor, add a new page and search for 'Upcoming Events Lists', set necessary options as your requirement.
+Save and view you page. All done!
+
+Step 3: Shortcode (When you cannot use step 2)
+Add a new page and paste the following shortcode where you want to display the events:
+
+`[upcoming_events_list]`
+
+The shortcode can include following attributes.
+
+* `view_type`: Default value `list`. Value can be `list` or `grid`.
+* `show_all_event_link`: Default value `yes`. Value can be `yes` or `no`.
+
+If you set `grid` for `view_type`, you can also include the following attributes.
+
+* `columns_on_tablet`: Default value `2`. Value can be from 1 to 6 (except 5)
+* `columns_on_desktop`: Default value `3`. Value can be from 1 to 6 (except 5)
+* `columns_on_widescreen`: Default value `4`. Value can be from 1 to 6 (except 5)
+
+Example 1:
+
+`[upcoming_events_list view_type='grid' columns_on_tablet='3' columns_on_desktop='4' columns_on_widescreen='6']`
 
 == Installation ==
-Installing the plugins is just like installing other WordPress plugins. If you don't know how to install plugins, please review the two options below:
-
-Install by Search
+Installing the plugins is just like installing other WordPress plugins. If you don't know how to install plugins, please review the option below:
 
 * From your WordPress dashboard, choose 'Add New' under the 'Plugins' category.
 * Search for 'upcoming-events-lists' a plugin will come called 'Upcoming Events Lists' and Click 'Install Now' and confirm your installation by clicking 'ok'
 * The plugin will download and install. Just click 'Activate Plugin' to activate it.
-
-Install by ZIP File
-
-* From your WordPress dashboard, choose 'Add New' under the 'Plugins' category.
-* Select 'Upload' from the set of links at the top of the page (the second link)
-* From here, browse for the zip file included in your plugin titled 'upcoming-events-lists.zip' and click the 'Install Now' button
-* Once installation is complete, activate the plugin to enable its features.
-
-Install by FTP
-
-* Find the directory titles 'upcoming-events-lists' and upload it and all files within to the plugins directory of your WordPress install (WORDPRESS-DIRECTORY/wp-content/plugins/) [e.g. http://www.yourdomain.com/wp-content/plugins/
-* From your WordPress dashboard, choose 'Installed Plugins' option under the 'Plugins' category
-* Locate the newly added plugin and click on the 'Activate' link to enable its features.
-
 
 == Frequently Asked Questions ==
 Do you have questions or issues with Upcoming Events Lists? [Ask for support](http://wordpress.org/support/plugin/upcoming-events-lists)
@@ -58,6 +61,12 @@ Do you have questions or issues with Upcoming Events Lists? [Ask for support](ht
 4. Screenshot of display of event at frontend
 
 == Changelog ==
+
+= version 1.4.0 - 2023-11-18 =
+* Add - Add shortcode `[upcoming_events_list]`.
+* Add - Add block editor support.
+* Tweak - Checked version compatibility upto WordPress 6.4
+* Dev - Update core code.
 
 = version 1.3.3 - 2019-01-23 =
 * Tweak - Checked version compatibility upto WordPress 5.0

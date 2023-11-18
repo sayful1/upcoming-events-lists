@@ -4,6 +4,8 @@
  * Plugin URI: https://sayfulislam.com/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
  * Description: Upcoming Events Lists let you show a list of upcoming events on the front-end.
  * Version: 1.4.0
+ * Requires at least: 6.0
+ * Requires PHP: 7.0
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
  * Text Domain: upcoming-events-lists
@@ -26,7 +28,7 @@ class Upcoming_Events_Lists {
 	 *
 	 * @var string
 	 */
-	private $version = '1.3.3';
+	private $version = '1.4.0';
 
 	/**
 	 * The instance of the class
@@ -132,6 +134,7 @@ class Upcoming_Events_Lists {
 
 		// Admin functionality
 		$this->container['admin'] = UpcomingEventsLists\Admin\Admin::init();
+		$this->container['block'] = UpcomingEventsLists\GutenbergBlock::init();
 
 		// Frontend functionality
 		if ( $this->is_request( 'frontend' ) ) {

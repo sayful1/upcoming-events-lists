@@ -190,7 +190,7 @@ class Event implements JsonSerializable {
 	 *
 	 * @return string
 	 */
-	public function get_display_date() {
+	public function get_display_date(): string {
 		$date_format = get_option( 'date_format' );
 
 		$day  = date_i18n( 'l', $this->get_start_date() );
@@ -213,7 +213,7 @@ class Event implements JsonSerializable {
 	 *
 	 * @return array
 	 */
-	public function get_event_participants() {
+	public function get_event_participants(): array {
 		$participants = $this->get_meta_value( 'event-participants' );
 
 		return is_array( $participants ) ? $participants : [];
@@ -224,7 +224,7 @@ class Event implements JsonSerializable {
 	 *
 	 * @return array|WP_User[]
 	 */
-	public function get_event_participants_users() {
+	public function get_event_participants_users(): array {
 		$participants = $this->get_event_participants();
 		if ( count( $participants ) < 1 ) {
 			return [];
@@ -265,7 +265,7 @@ class Event implements JsonSerializable {
 	 *
 	 * @return bool
 	 */
-	public function has_event_image() {
+	public function has_event_image(): bool {
 		$attachment_id = get_post_thumbnail_id( $this->get_id() );
 
 		return (bool) $attachment_id;
@@ -278,7 +278,7 @@ class Event implements JsonSerializable {
 	 *
 	 * @return array
 	 */
-	public function get_event_image_src( $size = 'full' ) {
+	public function get_event_image_src( string $size = 'full' ): array {
 		if ( ! isset( $this->image_src[ $size ] ) ) {
 			$thumbnail_id = get_post_thumbnail_id( $this->id );
 			if ( ! $thumbnail_id ) {
@@ -337,16 +337,18 @@ class Event implements JsonSerializable {
 					<?php echo $this->get_event_image(); ?>
                 </div>
 			<?php } ?>
-            <div class="upcoming-events-list-item__title">
-                <a class="upcoming-events-list-item__title-text" href="<?php echo $this->get_permalink(); ?>">
-					<?php echo $this->get_title(); ?>
-                </a>
-            </div>
-            <div class="upcoming-events-list-item__location">
-				<?php echo $this->get_location(); ?>
-            </div>
-            <div class="upcoming-events-list-item__datetime">
-				<?php echo $this->get_display_date(); ?>
+            <div class="upcoming-events-list-item__content">
+                <div class="upcoming-events-list-item__title">
+                    <a class="upcoming-events-list-item__title-text" href="<?php echo $this->get_permalink(); ?>">
+						<?php echo $this->get_title(); ?>
+                    </a>
+                </div>
+                <div class="upcoming-events-list-item__location">
+					<?php echo $this->get_location(); ?>
+                </div>
+                <div class="upcoming-events-list-item__datetime">
+					<?php echo $this->get_display_date(); ?>
+                </div>
             </div>
         </div>
 		<?php

@@ -3,6 +3,9 @@
   "entryPoints": {
     "frontend": [
       "./resources/scss/frontend.scss"
+    ],
+    "block": [
+      "./resources/block/index.jsx"
     ]
   }
 }

@@ -39,22 +39,69 @@ class Frontend {
 	 *
 	 * @return string
 	 */
-	public function upcoming_events_list() {
+	public function upcoming_events_list( $attributes ): string {
+		$attributes = shortcode_atts( array(
+			'show_all_event_link'   => 'yes',
+			'view_type'             => 'list', // 'list' or 'grid'
+			'columns_on_tablet'     => 2,
+			'columns_on_desktop'    => 3,
+			'columns_on_widescreen' => 4,
+		), $attributes, 'upcoming_events_list' );
+
+		$view   = 'grid' === $attributes['view_type'] ? 'grid' : 'list';
 		$events = Event::get_events();
 		ob_start();
+
+		$classes                = [ 'upcoming-events-list', $view . '-view' ];
+		$classes_item_container = [ 'upcoming-events-list-container' ];
+		if ( 'grid' === $view ) {
+			$classes[]                = 'shapla-columns is-multiline';
+			$classes_item_container[] = static::column_to_class( $attributes );
+		}
 		?>
-        <div class="upcoming-events-list">
+        <div class="<?php echo esc_attr( join( ' ', $classes ) ) ?>">
 			<?php
 			foreach ( $events as $event ) {
+				echo '<div class="' . esc_attr( join( ' ', $classes_item_container ) ) . '">';
 				$event->get_event_card();
+				echo '</div>';
 			}
 			?>
         </div>
-        <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( Event::POST_TYPE ); ?>">
-			<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
-        </a>
-		<?php
+		<?php if ( 'yes' === $attributes['show_all_event_link'] ) { ?>
+            <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( Event::POST_TYPE ); ?>">
+				<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
+            </a>
+			<?php
+		}
+
 		return ob_get_clean();
+	}
+
+	private static function column_to_class( array $attributes ) {
+		$defaults = [
+			'columns_on_phone'      => 1,
+			'columns_on_tablet'     => 2,
+			'columns_on_desktop'    => 3,
+			'columns_on_widescreen' => 4,
+		];
+		$maps     = [ 1 => 12, 2 => 6, 3 => 4, 4 => 3, 6 => 2 ];
+		$attrs    = [];
+		foreach ( $defaults as $key => $default ) {
+			$number        = isset( $attributes[ $key ] ) ? intval( $attributes[ $key ] ) : $default;
+			$number        = min( 6, max( 1, $number ) );
+			$attrs[ $key ] = $maps[ $number ] ?? - 1;
+		}
+
+		$classes = [ 'shapla-column', sprintf( 'is-%s-tablet', $attrs['columns_on_tablet'] ) ];
+		if ( $attrs['columns_on_desktop'] < $attrs['columns_on_tablet'] ) {
+			$classes[] = sprintf( 'is-%s-desktop', $attrs['columns_on_desktop'] );
+		}
+		if ( $attrs['columns_on_widescreen'] < $attrs['columns_on_desktop'] ) {
+			$classes[] = sprintf( 'is-%s-widescreen', $attrs['columns_on_widescreen'] );
+		}
+
+		return join( ' ', $classes );
 	}
 
 	/**
@@ -62,7 +109,7 @@ class Frontend {
 	 */
 	public function frontend_scripts() {
 		if ( ! $this->should_load_frontend_script() ) {
-//			return;
+			return;
 		}
 		wp_enqueue_style( UPCOMING_EVENTS_LISTS . '-frontend' );
 	}
@@ -72,7 +119,7 @@ class Frontend {
 	 *
 	 * @return bool
 	 */
-	public function should_load_frontend_script() {
+	public function should_load_frontend_script(): bool {
 		if ( is_active_widget( '', '', 'sis_upcoming_events', true ) ) {
 			return true;
 		}
