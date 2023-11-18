@@ -177,10 +177,10 @@ class Admin {
 
 		//get previously saved meta values (if any)
 		$event_start_date = get_post_meta( $post->ID, 'event-start-date', true );
-		$event_start_date = ! empty( $event_start_date ) ? $event_start_date : '';
+		$event_start_date = ! empty( $event_start_date ) ? date( 'Y-m-d', strtotime( $event_start_date ) ) : '';
 
 		$event_end_date = get_post_meta( $post->ID, 'event-end-date', true );
-		$event_end_date = ! empty( $event_end_date ) ? $event_end_date : $event_start_date;
+		$event_end_date = ! empty( $event_end_date ) ? date( 'Y-m-d', strtotime( $event_end_date ) ) : $event_start_date;
 
 		$event_start_time = get_post_meta( $post->ID, 'event-start-time', true );
 		$event_end_time   = get_post_meta( $post->ID, 'event-end-time', true );
@@ -191,13 +191,15 @@ class Admin {
         <p>
             <label for="sis-event-start-date"><?php _e( 'Event Start Date:', 'upcoming-events' ); ?></label>
             <input type="date" id="sis-event-start-date" name="sis-event-start-date"
-                   class="widefat sis-event-date-input" value="<?php echo date( 'Y-m-d', $event_start_date ); ?>"
+                   class="widefat sis-event-date-input"
+                   value="<?php echo esc_attr( $event_start_date ); ?>"
                    placeholder="yyyy-mm-dd">
         </p>
         <p>
             <label for="sis-event-end-date"><?php _e( 'Event End Date:', 'upcoming-events' ); ?></label>
             <input type="date" id="sis-event-end-date" name="sis-event-end-date"
-                   class="widefat sis-event-date-input" value="<?php echo date( 'Y-m-d', $event_end_date ); ?>"
+                   class="widefat sis-event-date-input"
+                   value="<?php echo esc_attr( $event_end_date ); ?>"
                    placeholder="yyyy-mm-dd">
         </p>
         <p>

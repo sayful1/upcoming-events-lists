@@ -45,13 +45,17 @@ class EventsWidget extends WP_Widget {
 
         <!-- Rendering the widget form in the admin -->
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'upcoming-events' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>">
+                <?php _e( 'Title', 'upcoming-events' ); ?>
+            </label>
             <input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>"
                    name="<?php echo $this->get_field_name( 'title' ); ?>" class="widefat"
                    value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'number_events' ); ?>"><?php _e( 'Number of events to show', 'upcoming-events' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'number_events' ); ?>">
+                <?php _e( 'Number of events to show', 'upcoming-events' ); ?>
+            </label>
             <select id="<?php echo $this->get_field_id( 'number_events' ); ?>"
                     name="<?php echo $this->get_field_name( 'number_events' ); ?>" class="widefat">
 				<?php for ( $i = 1; $i <= 10; $i ++ ): ?>
@@ -96,16 +100,15 @@ class EventsWidget extends WP_Widget {
 			$title = apply_filters( 'widget_title', $instance['title'] );
 		}
 
-		$events = Event::get_events();
-
 		//Preparing to show the events
 		echo $args['before_widget'];
 
 		if ( ! empty( $title ) ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-		?>
 
+		$events = Event::get_events();
+		?>
         <div class="upcoming-events-list">
 			<?php
 			foreach ( $events as $event ) {
@@ -116,7 +119,6 @@ class EventsWidget extends WP_Widget {
         <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( Event::POST_TYPE ); ?>">
 			<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
         </a>
-
 		<?php
 		echo $args['after_widget'];
 	}

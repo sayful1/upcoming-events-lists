@@ -1,62 +1,57 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const svgToMiniDataURI = require('mini-svg-data-uri');
 
 const config = require('./config.json');
-
-let plugins = [];
-let entryPoints = {
-    frontend: [
-        "./assets/src/scss/frontend.scss",
-    ],
-};
-
-plugins.push(new MiniCssExtractPlugin({
-    filename: "../css/[name].css"
-}));
-
-plugins.push(new BrowserSyncPlugin({
-    proxy: config.proxyURL
-}));
-
-plugins.push(new VueLoaderPlugin());
 
 module.exports = (env, argv) => {
     let isDev = argv.mode !== 'production';
 
-    return {
-        "entry": entryPoints,
-        "output": {
-            "path": path.resolve(__dirname, 'assets/js'),
-            "filename": '[name].js'
+    let plugins = [];
+
+    plugins.push(new MiniCssExtractPlugin({
+        filename: "../css/[name].css"
+    }));
+
+    plugins.push(new BrowserSyncPlugin({
+        proxy: config.proxyURL
+    }));
+
+    const webpackConfig = {
+        entry: config.entryPoints,
+        output: {
+            path: path.resolve(__dirname, 'assets/js'),
+            filename: '[name].js'
         },
-        "devtool": isDev ? 'eval-source-map' : false,
-        "module": {
-            "rules": [
+        devtool: isDev ? 'eval-source-map' : false,
+        module: {
+            rules: [
                 {
-                    "test": /\.js$/,
-                    "use": {
-                        "loader": "babel-loader",
-                        "options": {
-                            presets: ['@babel/preset-env']
+                    test: /\.(js|jsx|ts|tsx)$/i,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-react',
+                                "@babel/preset-typescript"
+                            ],
+                            plugins: [
+                                ['@babel/plugin-proposal-class-properties'],
+                                ['@babel/plugin-proposal-private-methods'],
+                                ['@babel/plugin-proposal-object-rest-spread'],
+                            ]
                         }
                     }
                 },
                 {
-                    test: /\.vue$/,
-                    use: [
-                        {loader: 'vue-loader'}
-                    ]
-                },
-                {
-                    test: /\.(sass|scss)$/,
+                    test: /\.(sass|scss|css)$/i,
                     use: [
                         {
-                            loader: isDev ? "vue-style-loader" : MiniCssExtractPlugin.loader
+                            loader: isDev ? "style-loader" : MiniCssExtractPlugin.loader
                         },
                         {
                             loader: "css-loader",
@@ -69,7 +64,11 @@ module.exports = (env, argv) => {
                             loader: "postcss-loader",
                             options: {
                                 sourceMap: isDev,
-                                plugins: () => [autoprefixer()],
+                                postcssOptions: {
+                                    plugins: [
+                                        ['postcss-preset-env'],
+                                    ],
+                                },
                             },
                         },
                         {
@@ -81,31 +80,62 @@ module.exports = (env, argv) => {
                     ]
                 },
                 {
-                    test: /\.(png|je?pg|gif|svg|eot|ttf|woff|woff2)$/,
-                    use: [
-                        {loader: 'file-loader'},
-                    ],
+                    test: /\.(eot|ttf|woff|woff2)$/i,
+                    type: 'asset/resource',
+                    generator: {
+                        filename: '../fonts/[hash][ext]'
+                    }
                 },
+                {
+                    test: /\.(png|je?pg|gif)$/i,
+                    type: 'asset',
+                    generator: {
+                        filename: '../images/[hash][ext]'
+                    }
+                },
+                {
+                    test: /\.svg$/i,
+                    type: 'asset',
+                    generator: {
+                        filename: '../images/[hash][ext]',
+                        dataUrl: content => svgToMiniDataURI(content.toString())
+                    },
+                }
             ]
         },
         optimization: {
             minimizer: [
                 new TerserPlugin(),
-                new OptimizeCSSAssetsPlugin()
+                new CssMinimizerPlugin()
             ]
         },
         resolve: {
             alias: {
-                'vue$': 'vue/dist/vue.esm.js',
-                '@': path.resolve('./assets/src/'),
+                '@': path.resolve('./resources/'),
             },
             modules: [
                 path.resolve('./node_modules'),
-                path.resolve(path.join(__dirname, 'assets/src/')),
-                path.resolve(path.join(__dirname, 'assets/src/shapla')),
+                path.resolve(path.join(__dirname, 'resources/')),
             ],
-            extensions: ['*', '.js', '.vue', '.json']
+            fallback: {
+                url: false
+            },
+            extensions: ['.js', '.jsx', '.ts', '.tsx']
         },
-        "plugins": plugins
+        plugins: plugins
     }
+
+    webpackConfig.externals = {
+        '@wordpress/block-editor': 'wp.blockEditor',
+        '@wordpress/blocks': 'wp.blocks',
+        '@wordpress/components': 'wp.components',
+        '@wordpress/server-side-render': 'wp.serverSideRender',
+        '@wordpress/i18n': 'wp.i18n',
+        'imagesloaded': 'imagesLoaded',
+        'jquery': 'jQuery',
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+    }
+
+    return webpackConfig;
 };

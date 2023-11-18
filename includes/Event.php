@@ -2,13 +2,14 @@
 
 namespace UpcomingEventsLists;
 
+use JsonSerializable;
 use WP_Post;
 use WP_User;
 
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || exit;
 
-class Event implements \JsonSerializable {
+class Event implements JsonSerializable {
 
 	/**
 	 * Post type name
@@ -55,7 +56,7 @@ class Event implements \JsonSerializable {
 	/**
 	 * Class constructor.
 	 *
-	 * @param null|int|WP_Post $post
+	 * @param  null|int|WP_Post  $post
 	 */
 	public function __construct( $post = null ) {
 		$this->_post = get_post( $post );
@@ -101,8 +102,8 @@ class Event implements \JsonSerializable {
 	/**
 	 * Get meta value
 	 *
-	 * @param string $key
-	 * @param mixed $default
+	 * @param  string  $key
+	 * @param  mixed  $default
 	 *
 	 * @return mixed|null
 	 */
@@ -244,8 +245,8 @@ class Event implements \JsonSerializable {
 	/**
 	 * Add participant to event
 	 *
-	 * @param int $user_id
-	 * @param string $status
+	 * @param  int  $user_id
+	 * @param  string  $status
 	 */
 	public function add_participant( $user_id, $status ) {
 		$valid_status = [ 'yes', 'no', 'maybe' ];
@@ -273,7 +274,7 @@ class Event implements \JsonSerializable {
 	/**
 	 * Get event image source
 	 *
-	 * @param string $size
+	 * @param  string  $size
 	 *
 	 * @return array
 	 */
@@ -298,7 +299,7 @@ class Event implements \JsonSerializable {
 	/**
 	 * Get event image url
 	 *
-	 * @param string $size
+	 * @param  string  $size
 	 *
 	 * @return mixed|string
 	 */
@@ -315,7 +316,7 @@ class Event implements \JsonSerializable {
 	/**
 	 * Get event image
 	 *
-	 * @param string $size
+	 * @param  string  $size
 	 *
 	 * @return string
 	 */
@@ -354,7 +355,7 @@ class Event implements \JsonSerializable {
 	/**
 	 * Get events
 	 *
-	 * @param array $args
+	 * @param  array  $args
 	 *
 	 * @return self[]
 	 */
@@ -399,7 +400,7 @@ class Event implements \JsonSerializable {
 	 * @return mixed data which can be serialized by <b>json_encode</b>,
 	 * which is a value of any type other than a resource.
 	 */
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return $this->to_array();
 	}
 }

@@ -3,7 +3,6 @@
 namespace UpcomingEventsLists\Frontend;
 
 use UpcomingEventsLists\Event;
-use UpcomingEventsLists\StructuredData\EventData;
 
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || exit;
@@ -29,9 +28,33 @@ class Frontend {
 			add_action( 'wp_enqueue_scripts', array( self::$instance, 'frontend_scripts' ) );
 			add_filter( 'the_content', array( self::$instance, 'single_event_content' ) );
 			add_filter( 'the_content', array( self::$instance, 'archive_event_content' ) );
+			add_shortcode( 'upcoming_events_list', array( self::$instance, 'upcoming_events_list' ) );
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Render upcoming events list html
+	 *
+	 * @return string
+	 */
+	public function upcoming_events_list() {
+		$events = Event::get_events();
+		ob_start();
+		?>
+        <div class="upcoming-events-list">
+			<?php
+			foreach ( $events as $event ) {
+				$event->get_event_card();
+			}
+			?>
+        </div>
+        <a class="upcoming-events-list-button" href="<?php echo get_post_type_archive_link( Event::POST_TYPE ); ?>">
+			<?php esc_html_e( 'View All Events', 'upcoming-events' ); ?>
+        </a>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -39,7 +62,7 @@ class Frontend {
 	 */
 	public function frontend_scripts() {
 		if ( ! $this->should_load_frontend_script() ) {
-			return;
+//			return;
 		}
 		wp_enqueue_style( UPCOMING_EVENTS_LISTS . '-frontend' );
 	}
@@ -55,6 +78,11 @@ class Frontend {
 		}
 
 		if ( is_singular( Event::POST_TYPE ) || is_post_type_archive( Event::POST_TYPE ) ) {
+			return true;
+		}
+
+		global $post;
+		if ( $post instanceof \WP_Post && has_shortcode( $post->post_content, 'upcoming_events_list' ) ) {
 			return true;
 		}
 
@@ -98,7 +126,7 @@ class Frontend {
 	}
 
 	/**
-	 * @param string $content
+	 * @param  string  $content
 	 *
 	 * @return string
 	 */
@@ -113,9 +141,14 @@ class Frontend {
 
 			$event = '<table>';
 			$event .= '<tr>';
-			$event .= '<td><strong>' . __( 'Event Start Date:', 'upcoming-events' ) . '</strong><br>' . date_i18n( get_option( 'date_format' ), $event_start_date ) . '</td>';
-			$event .= '<td><strong>' . __( 'Event End Date:', 'upcoming-events' ) . '</strong><br>' . date_i18n( get_option( 'date_format' ), $event_end_date ) . '</td>';
-			$event .= '<td><strong>' . __( 'Event Venue:', 'upcoming-events' ) . '</strong><br>' . $event_venue . '</td>';
+			$event .= '<td><strong>' . __( 'Event Start Date:',
+					'upcoming-events' ) . '</strong><br>' . date_i18n( get_option( 'date_format' ),
+					$event_start_date ) . '</td>';
+			$event .= '<td><strong>' . __( 'Event End Date:',
+					'upcoming-events' ) . '</strong><br>' . date_i18n( get_option( 'date_format' ),
+					$event_end_date ) . '</td>';
+			$event .= '<td><strong>' . __( 'Event Venue:',
+					'upcoming-events' ) . '</strong><br>' . $event_venue . '</td>';
 			$event .= '</tr>';
 			$event .= '</table>';
 

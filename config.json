@@ -1,3 +1,8 @@
 {
-	"proxyURL": "http://wordpress.test"
+  "proxyURL": "http://plugins.test/wp-admin/edit.php?post_type=event",
+  "entryPoints": {
+    "frontend": [
+      "./resources/scss/frontend.scss"
+    ]
+  }
 }

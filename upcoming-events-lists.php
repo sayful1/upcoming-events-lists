@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Upcoming Events Lists
- * Plugin URI: http://wordpress.org/plugins/upcoming-events-lists
- * Description: Upcoming Events Lists let you to show a list of upcoming events on the front-end.
+ * Plugin URI: https://sayfulislam.com/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
+ * Description: Upcoming Events Lists let you show a list of upcoming events on the front-end.
  * Version: 1.4.0
  * Author: Sayful Islam
- * Author URI: https://sayfulislam.com
+ * Author URI: https://sayfulislam.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
  * Text Domain: upcoming-events-lists
  * Domain Path: languages/
  * License: GPL2
@@ -140,12 +140,17 @@ class Upcoming_Events_Lists {
 		}
 
 		add_action( 'widgets_init', array( UpcomingEventsLists\EventsWidget::class, 'register' ) );
+
+		// WP-CLI Commands
+		if ( class_exists( \WP_CLI::class ) && class_exists( \WP_CLI_Command::class ) ) {
+			\WP_CLI::add_command( 'upcoming-events-lists', \UpcomingEventsLists\Cli\Command::class );
+		}
 	}
 
 	/**
 	 * What type of request is this?
 	 *
-	 * @param string $type admin, ajax, cron or frontend.
+	 * @param  string  $type  admin, ajax, cron or frontend.
 	 *
 	 * @return bool
 	 */
